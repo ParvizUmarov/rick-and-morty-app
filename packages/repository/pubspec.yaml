@@ -1,0 +1,33 @@
+name: repository
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  chopper: ^8.1.0
+
+  api:
+    path: ../api
+  sqlite3: ^2.7.5
+  drift: ^2.26.0
+  path: ^1.9.1
+  sqlite3_flutter_libs: ^0.5.31
+
+  freezed: ^3.0.4
+  path_provider: ^2.1.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_verify: any
+  drift_dev: ^2.26.0
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.4
+
+flutter:
