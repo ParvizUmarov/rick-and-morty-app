@@ -9,10 +9,7 @@ class FilterTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: TextField(
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
           hintText: "Search by name",
-          fillColor: Theme.of(context).colorScheme.tertiary,
-          filled: true,
         ),
         onChanged: (value){
           context.read<FavoriteBloc>().add(SearchFavoriteList(name: value));

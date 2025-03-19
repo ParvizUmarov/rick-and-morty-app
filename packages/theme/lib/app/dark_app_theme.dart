@@ -98,10 +98,12 @@ class DarkAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: LightAppColors.secondaryBackgroundColor,
-        //iconColor: AppColors.darkGrey,
+        hintStyle: baseTextStyle.bodyLarge.copyWith(
+          color: DarkAppColors.white
+        ),
+        fillColor: DarkAppColors.containerColor,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
         ),
       ),
 

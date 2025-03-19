@@ -74,7 +74,6 @@ class LightAppTheme {
           borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
         ),
       ),
-      // filledButtonTheme: FilledButtonThemeData(style: commonButtonStyle),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor: LightAppColors.borderColor,
@@ -91,10 +90,12 @@ class LightAppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: LightAppColors.secondaryBackgroundColor,
-        //iconColor: AppColors.darkGrey,
+        fillColor: LightAppColors.containerColor,
+        hintStyle: baseTextStyle.bodyLarge.copyWith(
+            color: LightAppColors.black
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
         ),
       ),
 
