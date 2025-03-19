@@ -33,7 +33,7 @@ class CharacterMapper {
         episode: data.episode,
         url: data.url,
         created: data.created.toString(),
-        isFavorite: true);
+        isFavorite: false);
   }
 
 

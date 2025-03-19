@@ -9,20 +9,28 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: customAppBar("Favorite"),
-      body: BlocBuilder<FavoriteBloc, FavoriteState>(
-        builder: (context, state) {
-          log("favorite: $state");
-          if(state is FavoriteSuccess) {
-            final model = state.characters;
-            if(model.isEmpty) {
-              return EmptyContentWidget();
-            }else{
-              return ListOfCharacterWidget(characters: model);
-            }
-          } else {
-            return EmptyContentWidget();
-          }
-        },
+      body: Column(
+        children: [
+          20.h,
+          FilterTextField(),
+          BlocBuilder<FavoriteBloc, FavoriteState>(
+            builder: (context, state) {
+              log("favorite: $state");
+              if(state is FavoriteSuccess) {
+                final model = state.characters;
+                if(model.isEmpty) {
+                  return EmptyContentWidget();
+                }else{
+                  return Expanded(child: ListOfCharacterWidget(characters: model));
+                }
+              } else if (state is FavoriteProgress) {
+                return CircularProgressIndicator();
+              } else {
+                return EmptyContentWidget();
+              }
+            },
+          ),
+        ],
       ),
     );
   }

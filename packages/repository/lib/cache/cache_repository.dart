@@ -1,7 +1,7 @@
 import '../utils/index.dart';
 
 abstract class CacheRepository {
-  Future<void> chooseFavorite(Character character);
+  Future<void> chooseFavorite(int id);
 
   Stream<List<Character>> fetchAllCharacter();
 
@@ -16,9 +16,8 @@ class CacheRepositoryImpl implements CacheRepository {
   CacheRepositoryImpl({required this.characterDb});
 
   @override
-  Future<void> chooseFavorite(Character character) async {
-    await characterDb
-        .addOrRemoveFromFavorite(CharacterMapper.entityToDataTable(character));
+  Future<void> chooseFavorite(int id) async {
+    await characterDb.addOrRemoveFromFavorite(id);
   }
 
   @override
@@ -45,7 +44,7 @@ class CacheRepositoryImpl implements CacheRepository {
 
   @override
   Future<void> updateData(List<Character> data) async {
-    // await characterDb.updateCharactersFromNetwork(
-    //     data.map((d) => CharacterMapper.entityToDataTable(d)).toList());
+    await characterDb.updateCharactersFromNetwork(
+        data.map((d) => CharacterMapper.entityToDataTable(d)).toList());
   }
 }

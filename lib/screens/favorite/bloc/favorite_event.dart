@@ -7,3 +7,9 @@ class UpdateFavoriteList extends FavoriteEvent {
 
   UpdateFavoriteList({required this.characters});
 }
+
+class SearchFavoriteList extends FavoriteEvent {
+  final String name;
+
+  SearchFavoriteList({required this.name});
+}

@@ -10,7 +10,7 @@ class FavoriteCubit extends Cubit<bool> {
 
   Future<void> chooseFavorite(Character character) async {
     try{
-      await _cacheRepository.chooseFavorite(character);
+      await _cacheRepository.chooseFavorite(character.id);
       emit(true);
     }catch (e){
       log("error while call chooseFavorite: $e");

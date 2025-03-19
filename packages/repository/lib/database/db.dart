@@ -28,14 +28,27 @@ class CharacterDb extends _$CharacterDb {
     return await select(characterTable).get();
   }
 
-  Future<void> addOrRemoveFromFavorite(CharacterTableData entity) async {
+  Future<void> addOrRemoveFromFavorite(int id) async {
     final characterExist = await (select(characterTable)
-          ..where((tbl) => tbl.id.equals(entity.id)))
+          ..where((tbl) => tbl.id.equals(id)))
         .getSingleOrNull();
     if (characterExist != null) {
-      await delete(characterTable).delete(characterExist);
-    } else {
-      await into(characterTable).insert(entity);
+      final updateCharacter =
+          characterExist.copyWith(isFavorite: !characterExist.isFavorite);
+
+      await (update(characterTable)..where((tbl) => tbl.id.equals(id)))
+          .write(updateCharacter);
     }
+    // else {
+    //   await into(characterTable).insert(entity);
+    // }
+  }
+
+  Future<void> updateCharactersFromNetwork(List<CharacterTableData> list) async {
+
+    batch((batch) {
+      batch.insertAll(characterTable, list, mode: InsertMode.insertOrIgnore);
+    });
+
   }
 }

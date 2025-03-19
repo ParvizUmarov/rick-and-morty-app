@@ -11,3 +11,4 @@ export 'package:repository/cloud/cloud_data_source_callback.dart';
 export 'package:repository/database/mapper/character_mapper.dart';
 export 'package:repository/database/database.dart';
 export 'package:repository/repositories/base_repository.dart';
+export 'package:repository/repositories/result_callback.dart';

@@ -10,14 +10,12 @@ class ListOfCharacterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: ListView.separated(
+      child: ListView.builder(
           physics: BouncingScrollPhysics(),
           itemBuilder: (context, index) {
             final character = characters[index];
             return CharacterContainer(data: character);
-          }, separatorBuilder: (context, index) {
-        return 10.h;
-      }, itemCount: characters.length),
+          },  itemCount: characters.length),
     );
   }
 }
