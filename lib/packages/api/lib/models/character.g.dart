@@ -20,6 +20,7 @@ Character _$CharacterFromJson(Map<String, dynamic> json) => Character(
           (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
       url: json['url'] as String,
       created: DateTime.parse(json['created'] as String),
+      isFavorite: json['is_favorite'] as bool?,
     );
 
 Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
@@ -35,4 +36,5 @@ Map<String, dynamic> _$CharacterToJson(Character instance) => <String, dynamic>{
       'episode': instance.episode,
       'url': instance.url,
       'created': instance.created.toIso8601String(),
+      'is_favorite': instance.isFavorite,
     };

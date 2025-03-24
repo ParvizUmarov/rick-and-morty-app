@@ -20,7 +20,7 @@ packages:
   api:
     dependency: "direct main"
     description:
-      path: "packages/api"
+      path: "lib/packages/api"
       relative: true
     source: path
     version: "0.0.1"
@@ -666,7 +666,7 @@ packages:
   repository:
     dependency: "direct main"
     description:
-      path: "packages/repository"
+      path: "lib/packages/repository"
       relative: true
     source: path
     version: "0.0.1"
@@ -862,7 +862,7 @@ packages:
   theme:
     dependency: "direct main"
     description:
-      path: "packages/theme"
+      path: "lib/packages/theme"
       relative: true
     source: path
     version: "0.0.1"

@@ -55,7 +55,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
       final searchResult =
       allCharacters
           .where(
-            (character) => character.name.toLowerCase().contains(
+            (character) => character.name.toLowerCase().startsWith(
           event.name.toLowerCase(),
         ),
       ).toList();

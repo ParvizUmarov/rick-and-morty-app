@@ -612,175 +612,15 @@ class CharacterTableCompanion extends UpdateCompanion<CharacterTableData> {
   }
 }
 
-class $FavoriteTableTable extends FavoriteTable
-    with TableInfo<$FavoriteTableTable, FavoriteTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $FavoriteTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-      'id', aliasedName, false,
-      type: DriftSqlType.int,
-      requiredDuringInsert: true,
-      defaultConstraints: GeneratedColumn.constraintIsAlways(
-          'REFERENCES character_table (id)'));
-  @override
-  List<GeneratedColumn> get $columns => [id];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'favorite_table';
-  @override
-  VerificationContext validateIntegrity(Insertable<FavoriteTableData> instance,
-      {bool isInserting = false}) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  FavoriteTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FavoriteTableData(
-      id: attachedDatabase.typeMapping
-          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
-    );
-  }
-
-  @override
-  $FavoriteTableTable createAlias(String alias) {
-    return $FavoriteTableTable(attachedDatabase, alias);
-  }
-}
-
-class FavoriteTableData extends DataClass
-    implements Insertable<FavoriteTableData> {
-  final int id;
-  const FavoriteTableData({required this.id});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    return map;
-  }
-
-  FavoriteTableCompanion toCompanion(bool nullToAbsent) {
-    return FavoriteTableCompanion(
-      id: Value(id),
-    );
-  }
-
-  factory FavoriteTableData.fromJson(Map<String, dynamic> json,
-      {ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FavoriteTableData(
-      id: serializer.fromJson<int>(json['id']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-    };
-  }
-
-  FavoriteTableData copyWith({int? id}) => FavoriteTableData(
-        id: id ?? this.id,
-      );
-  FavoriteTableData copyWithCompanion(FavoriteTableCompanion data) {
-    return FavoriteTableData(
-      id: data.id.present ? data.id.value : this.id,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FavoriteTableData(')
-          ..write('id: $id')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => id.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FavoriteTableData && other.id == this.id);
-}
-
-class FavoriteTableCompanion extends UpdateCompanion<FavoriteTableData> {
-  final Value<int> id;
-  final Value<int> rowid;
-  const FavoriteTableCompanion({
-    this.id = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  FavoriteTableCompanion.insert({
-    required int id,
-    this.rowid = const Value.absent(),
-  }) : id = Value(id);
-  static Insertable<FavoriteTableData> custom({
-    Expression<int>? id,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  FavoriteTableCompanion copyWith({Value<int>? id, Value<int>? rowid}) {
-    return FavoriteTableCompanion(
-      id: id ?? this.id,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FavoriteTableCompanion(')
-          ..write('id: $id, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 abstract class _$CharacterDb extends GeneratedDatabase {
   _$CharacterDb(QueryExecutor e) : super(e);
   $CharacterDbManager get managers => $CharacterDbManager(this);
   late final $CharacterTableTable characterTable = $CharacterTableTable(this);
-  late final $FavoriteTableTable favoriteTable = $FavoriteTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [characterTable, favoriteTable];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [characterTable];
 }
 
 typedef $$CharacterTableTableCreateCompanionBuilder = CharacterTableCompanion
@@ -815,27 +655,6 @@ typedef $$CharacterTableTableUpdateCompanionBuilder = CharacterTableCompanion
   Value<List<String>> episode,
   Value<bool> isFavorite,
 });
-
-final class $$CharacterTableTableReferences extends BaseReferences<
-    _$CharacterDb, $CharacterTableTable, CharacterTableData> {
-  $$CharacterTableTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static MultiTypedResultKey<$FavoriteTableTable, List<FavoriteTableData>>
-      _favoriteTableRefsTable(_$CharacterDb db) =>
-          MultiTypedResultKey.fromTable(db.favoriteTable,
-              aliasName: $_aliasNameGenerator(
-                  db.characterTable.id, db.favoriteTable.id));
-
-  $$FavoriteTableTableProcessedTableManager get favoriteTableRefs {
-    final manager = $$FavoriteTableTableTableManager($_db, $_db.favoriteTable)
-        .filter((f) => f.id.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_favoriteTableRefsTable($_db));
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: cache));
-  }
-}
 
 class $$CharacterTableTableFilterComposer
     extends Composer<_$CharacterDb, $CharacterTableTable> {
@@ -890,27 +709,6 @@ class $$CharacterTableTableFilterComposer
 
   ColumnFilters<bool> get isFavorite => $composableBuilder(
       column: $table.isFavorite, builder: (column) => ColumnFilters(column));
-
-  Expression<bool> favoriteTableRefs(
-      Expression<bool> Function($$FavoriteTableTableFilterComposer f) f) {
-    final $$FavoriteTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.favoriteTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FavoriteTableTableFilterComposer(
-              $db: $db,
-              $table: $db.favoriteTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
 }
 
 class $$CharacterTableTableOrderingComposer
@@ -1009,27 +807,6 @@ class $$CharacterTableTableAnnotationComposer
 
   GeneratedColumn<bool> get isFavorite => $composableBuilder(
       column: $table.isFavorite, builder: (column) => column);
-
-  Expression<T> favoriteTableRefs<T extends Object>(
-      Expression<T> Function($$FavoriteTableTableAnnotationComposer a) f) {
-    final $$FavoriteTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.favoriteTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$FavoriteTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.favoriteTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return f(composer);
-  }
 }
 
 class $$CharacterTableTableTableManager extends RootTableManager<
@@ -1041,9 +818,12 @@ class $$CharacterTableTableTableManager extends RootTableManager<
     $$CharacterTableTableAnnotationComposer,
     $$CharacterTableTableCreateCompanionBuilder,
     $$CharacterTableTableUpdateCompanionBuilder,
-    (CharacterTableData, $$CharacterTableTableReferences),
+    (
+      CharacterTableData,
+      BaseReferences<_$CharacterDb, $CharacterTableTable, CharacterTableData>
+    ),
     CharacterTableData,
-    PrefetchHooks Function({bool favoriteTableRefs})> {
+    PrefetchHooks Function()> {
   $$CharacterTableTableTableManager(
       _$CharacterDb db, $CharacterTableTable table)
       : super(TableManagerState(
@@ -1116,37 +896,9 @@ class $$CharacterTableTableTableManager extends RootTableManager<
             isFavorite: isFavorite,
           ),
           withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$CharacterTableTableReferences(db, table, e)
-                  ))
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: ({favoriteTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (favoriteTableRefs) db.favoriteTable
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (favoriteTableRefs)
-                    await $_getPrefetchedData<CharacterTableData,
-                            $CharacterTableTable, FavoriteTableData>(
-                        currentTable: table,
-                        referencedTable: $$CharacterTableTableReferences
-                            ._favoriteTableRefsTable(db),
-                        managerFromTypedResult: (p0) =>
-                            $$CharacterTableTableReferences(db, table, p0)
-                                .favoriteTableRefs,
-                        referencedItemsForCurrentItem:
-                            (item, referencedItems) =>
-                                referencedItems.where((e) => e.id == item.id),
-                        typedResults: items)
-                ];
-              },
-            );
-          },
+          prefetchHooksCallback: null,
         ));
 }
 
@@ -1159,231 +911,16 @@ typedef $$CharacterTableTableProcessedTableManager = ProcessedTableManager<
     $$CharacterTableTableAnnotationComposer,
     $$CharacterTableTableCreateCompanionBuilder,
     $$CharacterTableTableUpdateCompanionBuilder,
-    (CharacterTableData, $$CharacterTableTableReferences),
+    (
+      CharacterTableData,
+      BaseReferences<_$CharacterDb, $CharacterTableTable, CharacterTableData>
+    ),
     CharacterTableData,
-    PrefetchHooks Function({bool favoriteTableRefs})>;
-typedef $$FavoriteTableTableCreateCompanionBuilder = FavoriteTableCompanion
-    Function({
-  required int id,
-  Value<int> rowid,
-});
-typedef $$FavoriteTableTableUpdateCompanionBuilder = FavoriteTableCompanion
-    Function({
-  Value<int> id,
-  Value<int> rowid,
-});
-
-final class $$FavoriteTableTableReferences extends BaseReferences<_$CharacterDb,
-    $FavoriteTableTable, FavoriteTableData> {
-  $$FavoriteTableTableReferences(
-      super.$_db, super.$_table, super.$_typedResult);
-
-  static $CharacterTableTable _idTable(_$CharacterDb db) =>
-      db.characterTable.createAlias(
-          $_aliasNameGenerator(db.favoriteTable.id, db.characterTable.id));
-
-  $$CharacterTableTableProcessedTableManager get id {
-    final $_column = $_itemColumn<int>('id')!;
-
-    final manager = $$CharacterTableTableTableManager($_db, $_db.characterTable)
-        .filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_idTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-        manager.$state.copyWith(prefetchedData: [item]));
-  }
-}
-
-class $$FavoriteTableTableFilterComposer
-    extends Composer<_$CharacterDb, $FavoriteTableTable> {
-  $$FavoriteTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$CharacterTableTableFilterComposer get id {
-    final $$CharacterTableTableFilterComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.characterTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$CharacterTableTableFilterComposer(
-              $db: $db,
-              $table: $db.characterTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$FavoriteTableTableOrderingComposer
-    extends Composer<_$CharacterDb, $FavoriteTableTable> {
-  $$FavoriteTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$CharacterTableTableOrderingComposer get id {
-    final $$CharacterTableTableOrderingComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.characterTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$CharacterTableTableOrderingComposer(
-              $db: $db,
-              $table: $db.characterTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$FavoriteTableTableAnnotationComposer
-    extends Composer<_$CharacterDb, $FavoriteTableTable> {
-  $$FavoriteTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$CharacterTableTableAnnotationComposer get id {
-    final $$CharacterTableTableAnnotationComposer composer = $composerBuilder(
-        composer: this,
-        getCurrentColumn: (t) => t.id,
-        referencedTable: $db.characterTable,
-        getReferencedColumn: (t) => t.id,
-        builder: (joinBuilder,
-                {$addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer}) =>
-            $$CharacterTableTableAnnotationComposer(
-              $db: $db,
-              $table: $db.characterTable,
-              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-              joinBuilder: joinBuilder,
-              $removeJoinBuilderFromRootComposer:
-                  $removeJoinBuilderFromRootComposer,
-            ));
-    return composer;
-  }
-}
-
-class $$FavoriteTableTableTableManager extends RootTableManager<
-    _$CharacterDb,
-    $FavoriteTableTable,
-    FavoriteTableData,
-    $$FavoriteTableTableFilterComposer,
-    $$FavoriteTableTableOrderingComposer,
-    $$FavoriteTableTableAnnotationComposer,
-    $$FavoriteTableTableCreateCompanionBuilder,
-    $$FavoriteTableTableUpdateCompanionBuilder,
-    (FavoriteTableData, $$FavoriteTableTableReferences),
-    FavoriteTableData,
-    PrefetchHooks Function({bool id})> {
-  $$FavoriteTableTableTableManager(_$CharacterDb db, $FavoriteTableTable table)
-      : super(TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$FavoriteTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$FavoriteTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$FavoriteTableTableAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback: ({
-            Value<int> id = const Value.absent(),
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FavoriteTableCompanion(
-            id: id,
-            rowid: rowid,
-          ),
-          createCompanionCallback: ({
-            required int id,
-            Value<int> rowid = const Value.absent(),
-          }) =>
-              FavoriteTableCompanion.insert(
-            id: id,
-            rowid: rowid,
-          ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (
-                    e.readTable(table),
-                    $$FavoriteTableTableReferences(db, table, e)
-                  ))
-              .toList(),
-          prefetchHooksCallback: ({id = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins: <
-                  T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic>>(state) {
-                if (id) {
-                  state = state.withJoin(
-                    currentTable: table,
-                    currentColumn: table.id,
-                    referencedTable:
-                        $$FavoriteTableTableReferences._idTable(db),
-                    referencedColumn:
-                        $$FavoriteTableTableReferences._idTable(db).id,
-                  ) as T;
-                }
-
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ));
-}
-
-typedef $$FavoriteTableTableProcessedTableManager = ProcessedTableManager<
-    _$CharacterDb,
-    $FavoriteTableTable,
-    FavoriteTableData,
-    $$FavoriteTableTableFilterComposer,
-    $$FavoriteTableTableOrderingComposer,
-    $$FavoriteTableTableAnnotationComposer,
-    $$FavoriteTableTableCreateCompanionBuilder,
-    $$FavoriteTableTableUpdateCompanionBuilder,
-    (FavoriteTableData, $$FavoriteTableTableReferences),
-    FavoriteTableData,
-    PrefetchHooks Function({bool id})>;
+    PrefetchHooks Function()>;
 
 class $CharacterDbManager {
   final _$CharacterDb _db;
   $CharacterDbManager(this._db);
   $$CharacterTableTableTableManager get characterTable =>
       $$CharacterTableTableTableManager(_db, _db.characterTable);
-  $$FavoriteTableTableTableManager get favoriteTable =>
-      $$FavoriteTableTableTableManager(_db, _db.favoriteTable);
 }

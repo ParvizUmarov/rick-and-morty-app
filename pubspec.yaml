@@ -1,12 +1,12 @@
 name: rick_and_morty_app
 description: "A new Flutter project."
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.0
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -14,11 +14,11 @@ dependencies:
 
   cupertino_icons: ^1.0.8
   theme:
-    path: packages/theme
+    path: lib/packages/theme
   repository:
-    path: packages/repository
+    path: lib/packages/repository
   api:
-    path: packages/api
+    path: lib/packages/api
   flutter_bloc: ^9.1.0
   bloc: ^9.0.0
   go_router: ^14.8.1
